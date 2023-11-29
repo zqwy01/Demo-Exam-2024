@@ -19,21 +19,25 @@ ___
 
     hostnamectl hostname ISP
     reboot
+
 * Использовать команды на HQ-R
 
 
     hostnamectl hostname HQ-R
     reboot
+
 * Использовать команды на HQ-SRV
 
 
     hostnamectl hostname HQ-SRV
     reboot
+
 * Использовать команды на BR-R
 
 
     hostnamectl hostname BR-R
     reboot
+
 * Использовать команды на BR-SRV
 
 
