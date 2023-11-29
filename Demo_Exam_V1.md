@@ -22,28 +22,28 @@ ___
 
     reboot
 
-* Использовать команды на HQ-R
+Использовать команды на HQ-R
 
 
     hostnamectl hostname HQ-R
     
     reboot
 
-* Использовать команды на HQ-SRV
+Использовать команды на HQ-SRV
 
 
     hostnamectl hostname HQ-SRV
     
     reboot
 
-* Использовать команды на BR-R
+Использовать команды на BR-R
 
 
     hostnamectl hostname BR-R
     
     reboot
 
-* Использовать команды на BR-SRV
+Использовать команды на BR-SRV
 
 
     hostnamectl hostname BR-SRV
