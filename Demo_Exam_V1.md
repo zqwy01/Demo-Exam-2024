@@ -14,32 +14,40 @@ ___
         d. Пул адресов для сети офиса HQ - не более 64
 
 <h3><u>Настроить на всех устройствах Linux</u></h3>
-* **Используем команду на ISP**
->hostnamectl hostname ISP
-<br>
->reboot
-* **Используем команды на HQ-R**
->hostnamectl hostname HQ-R
-<br>
->reboot
-* **Используем команды на HQ-SRV**
->hostnamectl hostname HQ-SRV
-<br>
->reboot
-* **Используем команды на BR-R**
+* Использовать команду на ISP
+
+
+    hostnamectl hostname ISP
+    reboot
+* Использовать команды на HQ-R
+
+
+    hostnamectl hostname HQ-R
+    reboot
+* Использовать команды на HQ-SRV
+
+
+    hostnamectl hostname HQ-SRV
+    reboot
+* Использовать команды на BR-R
 <br>
 >reboot
 >hostnamectl hostname BR-R
 <br>
 >reboot
-* **Используем команды на BR-SRV**
->hostnamectl hostname BR-SRV
-<br>
->reboot
+* Использовать команды на BR-SRV
+
+
+    hostnamectl hostname BR-SRV
+    reboot
 
 <h3><u>Настроить на устройстве Windows</u></h3>
 
--[x] Выполнен пункт задания: А
+
+
+
+
+**Выполнен пункт задания: А**
 
 <h2>Рассчитать IPV4 и IPV6 адреса</h2>
 
@@ -52,7 +60,7 @@ ___
 | BR-R       | 4.4.4.2/28 172.16.100.1/28       | face::fac2/124 fefe::fef1/124           |
 | BR-SRV     | 172.16.100.2/28                  | fefe::fef2/124                          |
 
--[x] Выполнен пункты заданий: Б, С, Д
+**Выполнен пункты заданий: Б, С, Д**
 ___
 
 <h2>2. Настроить маршрутизацию</h2>
@@ -63,13 +71,17 @@ ___
         a. Составьте топологию сети L3.
 
 <h3><u>Настроить сетевые интерфейсы на ISP</u></h3>
-* **Вывести список сетевых интерфейсов** 
->ip a
+* Вывести список сетевых интерфейсов 
 
-* **Открыть конфигурационный файл сетевых интерфейсов**
->/etc/network/interfaces
 
-* **Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса** 
+    ip a
+
+* Открыть конфигурационный файл сетевых интерфейсов
+
+
+    /etc/network/interfaces
+
+* Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
       auto enp0s8
       iface enp0s8 inet static
@@ -98,17 +110,24 @@ ___
           address face::fac1
           netmask 124
 
-* **Перезапустить демон networking**
->systemctl restart networking
+* Перезапустить демон networking
+
+
+    systemctl restart networking
 
 <h3><u>Настроить сетевые интерфейсы на HQ-R</u></h3>
-* **Вывести список сетевых интерфейсов** 
->ip a
+* Вывести список сетевых интерфейсов
 
-* **Открыть конфигурационный файл сетевых интерфейсов**
->/etc/network/interfaces
 
-* **Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса** 
+    ip a
+
+* Открыть конфигурационный файл сетевых интерфейсов
+
+
+    /etc/network/interfaces
+
+* Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
+
 
       auto enp0s8
       iface enp0s8 inet static
