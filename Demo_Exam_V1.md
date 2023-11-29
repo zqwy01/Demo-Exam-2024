@@ -690,22 +690,22 @@ ___
          c. Все остальные устройства и сервера должны синхронизировать свое время с роутером HQ-R
          d. Все устройства и сервера настроены на московский часовой пояс (UTC +3)
 
-* Установить Chrony на всех устройствах Linux
+Установить Chrony на всех устройствах Linux
 
 
     apt-get install chrony -y
 
-* Включить автозапуск службы
+Включить автозапуск службы
 
 
     systemctl enable chrony
 
-* Установить часовой пояс по МСК (UTC +3) на Chrony сервере - HQ-R
+Установить часовой пояс по МСК (UTC +3) на Chrony сервере - HQ-R
 
 
     timedatectl set-timezone Europe/Moscow
 
-* Настроить на Chrony сервере - HQ-R конфигурацию /etc/chrony/chrony.conf
+Настроить на Chrony сервере - HQ-R конфигурацию /etc/chrony/chrony.conf
 
 
     #pool.2.debian.pool.ntp.org iburst
@@ -725,12 +725,12 @@ ___
 
     local stratum 5
 
-* Перезапускаем службу или полностью устройство
+Перезапускаем службу или полностью устройство
 
 
     systemctl restart chrony
 
-* Настроить конфигурацию Chrony /etc/chrony/chrony.conf на клиентских устройствах
+Настроить конфигурацию Chrony /etc/chrony/chrony.conf на клиентских устройствах
 
 
     #pool.2.debian.pool.ntp.org iburst
@@ -738,45 +738,53 @@ ___
     server 4.4.4.2 iburst
     server deda::de02 iburst
 
-* Перезапускаем службу или полностью устройство
+Перезапускаем службу или полностью устройство
 
 
     systemctl restart chrony
 
 ``Примечание: Сhrony будет искать сервер для подключение по-очереди из списка сетевых интерфейсов``
 
-* **Выполнить команду, для проверки серверов источников** 
->chronyc sources -v
+Выполнить команду, для проверки серверов источников
 
-* **Выполнить команду, для проверки синхронизации с сервером**
->timedatectl
 
-* **Выполнить команду, для детальной проверки синхронизации с chrony сервером** 
->chronyc tracking
+    chronyc sources -v
 
-* **Настроить NTP-клиент на Windows 10**
+Выполнить команду, для проверки синхронизации с сервером
+
+
+        timedatectl
+
+Выполнить команду, для детальной проверки синхронизации с Chrony сервером
+
+
+        chronyc tracking
+
+Настроить NTP-клиент на Windows 10
 
 ___
 
 <h2>2. Настройка сервер и клиент Samba + Kerberos + DNS</h2>
 
-* **Редактировать конфигурациюю /etc/hosts**
+Редактировать конфигурацию /etc/hosts
 
 
     192.168.100.2   HQ-SRV.HQ.WORK  HQ-SRV
 
-* **Изменить hostname**
+Изменить hostname**
 
->hostnamectl hostname HQ-SRV.HQ.WORK
 
-* **Редактировать конфигурацию /etc/dhcp/dhclient.conf**
+        hostnamectl hostname HQ-SRV.HQ.WORK
+
+Редактировать конфигурацию /etc/dhcp/dhclient.conf
 
   
-    prepend domain-name-servers 192.168.100.2;
+        prepend domain-name-servers 192.168.100.2;
 
-* **Установить пакеты**
+Установить пакеты
 
->apt-get install samba smbclient winbind krb5-user krb5-config -y
+
+    apt-get install samba smbclient winbind krb5-user krb5-config -y
 
     
     Область по умолчанию для Kerberos:
@@ -786,20 +794,22 @@ ___
     Управляющий сервер Kerberos:
       HQ-SRV.HQ.WORK
 
-* **Выключить службы**
-
->systemctl disable --now samba-ad-dc smbd nmbd winbind
+Выключить службы
 
 
-* **Удалить стандартную кофигурацию**
+        systemctl disable --now samba-ad-dc smbd nmbd winbind
+
+
+Удалить стандартную конфигурацию
 
 
     unlink /etc/samba/smb.conf
     unlink /etc/krb5.conf
 
-* **Настроить Samba AD DC**
+Настроить Samba AD DC
 
->samba-tool domain provision --use-rfc2307 --interactive
+
+    samba-tool domain provision --use-rfc2307 --interactive
 
     Realm: HQ.WORK
     Domain: HQ
@@ -808,94 +818,103 @@ ___
     DNS forwarder IP address: 192.168.100.2
     Administrator password: P@ssw0rd
 
-* **Копируем конфигурацию Kerberos**
-
->cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
-
-* **Создать символическую ссылку на keytab**
-
-ln -s /var/lib/samba/private/secrets.keytab /etc/krb5.keytab
-
-* **Запустить Samba AD**
+Копируем конфигурацию Kerberos
 
 
-    systemctl unmask samba-ad-dc.service
-    systemctl enable --now samba-ad-dc.service
+        cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
 
-* **Получить тикет от Kerberos**
+Создать символическую ссылку на keytab
 
->kinit Administrator
 
-* **Создадим пользователя samba**
+        ln -s /var/lib/samba/private/secrets.keytab /etc/krb5.keytab
 
->samba-tool user add Admin
+Запустить Samba AD
 
-* **Добавить DNS-сервер IPV4 IPV6 на CLI**
+
+        systemctl unmask samba-ad-dc.service
+        systemctl enable --now samba-ad-dc.service
+
+Получить тикет от Kerberos
+
+
+        kinit Administrator
+
+Создадим пользователя samba
+
+
+        samba-tool user add Admin
+
+Добавить DNS-сервер IPV4 IPV6 на CLI
 
 ![img_4.png](img_4.png)
 
 ![img_5.png](img_5.png)
 
-* **Войти в домен HQ.WORK на CLI**
+Войти в домен HQ.WORK на CLI
 
 ![img_6.png](img_6.png)
 
-* **Войти под пользователем Samba**
+Войти под пользователем Samba
 
 
-* **Установить Samba+Kerberos на клиенете BR-SRV**
-
->apt-get install install krb5-user samba winbind -y
-
-    Область по умолчанию для Kerberos:
-      HQ.WORK
-    Сервер Kerberos для вашей области:
-      HQ-SRV.HQ.WORK
-    Управляющий сервер Kerberos:
-      HQ-SRV.HQ.WORK
-
-* **Редактировать конфигурацию /etc/dhcp/dhclient.conf**
+Установить Samba+Kerberos на клиенте BR-SRV
 
 
-    prepend domain-name "HQ.WORK";
-    prepend domain-name-servers 192.168.100.2;
+        apt-get install install krb5-user samba winbind -y
+    
+        Область по умолчанию для Kerberos:
+          HQ.WORK
+        Сервер Kerberos для вашей области:
+          HQ-SRV.HQ.WORK
+        Управляющий сервер Kerberos:
+          HQ-SRV.HQ.WORK
 
-* **Изменить hostname**
-
->hostnamectl hostname BR-SRV.HQ.WORK
-
-* **Редактировать /etc/samba/smb.conf**
-
-    dns forwarder = 192.168.100.2
-    realm = HQ.WORK
-    workgroup = HQ
-    security = ADS
-
-* **Перезапустить BR-SRV**
-
->reboot
-
-* **Получить тикет от Kerberos**
-
->kinit Administrator
-
-* **Войти в домен HQ.WORK на BR-SRV**
-
->net ads join -U Administrator
-
-* **Добавить записи и зону для DNS сервера**
+Редактировать конфигурацию /etc/dhcp/dhclient.conf
 
 
-    samba-tool dns add hq-srv hq.work hq-r A 192.168.100.1
-    samba-tool dns add hq-srv hq.work hq-r PTR 192.168.100.1
-    samba-tool dns add hq-srv hq.work isp A 4.4.4.1
-    samba-tool dns add hq-srv hq.work isp PTR 4.4.4.1
+        prepend domain-name "HQ.WORK";
+        prepend domain-name-servers 192.168.100.2;
 
-    samba-tool dns zonecreate hq-srv branch.work
+Изменить hostname
 
-    samba-tool dns add hq-srv branch.work br-r A 5.5.5.2
-    samba-tool dns add hq-srv branch.work br-r PTR 5.5.5.2
-    samba-tool dns add hq-srv branch.work br-srv A 172.16.100.2
+
+        hostnamectl hostname BR-SRV.HQ.WORK
+
+Редактировать /etc/samba/smb.conf
+
+
+        dns forwarder = 192.168.100.2
+        realm = HQ.WORK
+        workgroup = HQ
+        security = ADS
+
+Перезапустить BR-SRV
+
+
+        reboot
+
+Получить тикет от Kerberos
+
+
+        kinit Administrator
+
+Войти в домен HQ.WORK на BR-SRV
+
+        net ads join -U Administrator
+
+Добавить записи и зону для DNS сервера
+
+
+        samba-tool dns add hq-srv hq.work hq-r A 192.168.100.1
+        samba-tool dns add hq-srv hq.work hq-r PTR 192.168.100.1
+        samba-tool dns add hq-srv hq.work isp A 4.4.4.1
+        samba-tool dns add hq-srv hq.work isp PTR 4.4.4.1
+    
+        samba-tool dns zonecreate hq-srv branch.work
+    
+        samba-tool dns add hq-srv branch.work br-r A 5.5.5.2
+        samba-tool dns add hq-srv branch.work br-r PTR 5.5.5.2
+        samba-tool dns add hq-srv branch.work br-srv A 172.16.100.2
 
 ___
 
@@ -905,10 +924,10 @@ ___
 
 
 
-    PermitEmptyPasswords no
-    PasswordAuthentication Yes
-    MaxAuthTries 4
-    ClientAliveInterval 5
+        PermitEmptyPasswords no
+        PasswordAuthentication Yes
+        MaxAuthTries 4
+        ClientAliveInterval 5
 
 
 
@@ -925,10 +944,12 @@ ___
 
 <br><h3><u>Настроить на всех устройствах Rsyslog</u></h3>
 
-**Установить Rsyslog**<br>
+Установить Rsyslog
+
 ``apt-get install rsyslog -y``
 
-**Включить автозапуск Rsyslog**<br>
+Включить автозапуск Rsyslog
+
 ``systemctl enable rsyslog``
 
 <h3><u>Настроить на сервере</u></h3>
