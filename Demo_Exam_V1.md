@@ -119,23 +119,21 @@ ___
           address face::fac1
           netmask 124
 
-* Перезапустить демон networking
+Перезапустить демон networking
 
 
     systemctl restart networking
 
 <h3><u>Настроить сетевые интерфейсы на HQ-R</u></h3>
-* Вывести список сетевых интерфейсов
+
+Вывести список сетевых интерфейсов
 
 
     ip a
 
-* Открыть конфигурационный файл сетевых интерфейсов
+Открыть конфигурационный файл сетевых интерфейсов /etc/network/interfaces
 
-
-    /etc/network/interfaces
-
-* Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
+Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
 
       auto enp0s8
@@ -156,21 +154,22 @@ ___
           address deda::de01
           netmask 122
 
-* Перезапустить демон networking
->systemctl restart networking
+Перезапустить демон networking
+
+
+    systemctl restart networking
 
 <h3><u>Настроить сетевые интерфейсы на HQ-SRV</u></h3>
-* Вывести список сетевых интерфейсов 
+
+Вывести список сетевых интерфейсов 
 
 
     ip a
 
-* Открыть конфигурационный файл сетевых интерфейсов
+Открыть конфигурационный файл сетевых интерфейсов /etc/network/interfaces
 
+Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
-    /etc/network/interfaces
-
-* Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
       auto enp0s8
       iface enp0s8 inet static
@@ -181,20 +180,22 @@ ___
           address deda::de02
           netmask 122
 
-* Перезапустить демон networking
+Перезапустить демон networking
 
 
     systemctl restart networking
 
 <h3><u>Настроить сетевые интерфейсы на BR-R</u></h3>
-* Вывести список сетевых интерфейсов
+
+Вывести список сетевых интерфейсов
 
 
     ip a
 
-* Открыть конфигурационный файл сетевых интерфейсов /etc/network/interfaces
+Открыть конфигурационный файл сетевых интерфейсов /etc/network/interfaces
 
-* Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
+Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
+
 
       auto enp0s8
       iface enp0s8 inet static
@@ -214,20 +215,22 @@ ___
           address fefa::fef1
           netmask 124
 
-* Перезапустить демон networking
+Перезапустить демон networking
 
 
     systemctl restart networking
 
 <h3><u>Настроить сетевые интерфейсы на BR-SRV</u></h3>
-* Вывести список сетевых интерфейсов 
+
+Вывести список сетевых интерфейсов 
 
 
     ip a
 
-* Открыть конфигурационный файл сетевых интерфейсов /etc/network/interfaces
+Открыть конфигурационный файл сетевых интерфейсов /etc/network/interfaces
 
-* Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
+Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
+
 
       auto enp0s8
       iface enp0s8 inet static
@@ -238,7 +241,7 @@ ___
           address fefa::fef2
           netmask 124
 
-* Перезапустить демон networking
+Перезапустить демон networking
 
 
     systemctl restart networking
@@ -256,46 +259,48 @@ ___
 
 <h3><u>Настроить брандмауэр на Windows Cli</u></h3>
 
-* Открыть Firewall
+Открыть Windows Defender Firewall
 
 ![img.png](img.png)
 
 ![img_1.png](img_1.png)
 
-* Открыть все порты
+Открыть доступ для всех портов
 
 <h3><u>Включить маршрутизацию BGP и OSPF на HQ-R, ISP, BR-R</u></h3>
-* Открыть конфигурационный файл /etc/frr/daemons и включить демоны маршрутизации BGPD и OSPFD
+
+Открыть конфигурационный файл /etc/frr/daemons и включить демоны маршрутизации BGPD и OSPFD
 
 
     bgpd=yes
     ospfd=yes
     ospf6d=yes 
 
-* Перезапустить службу FRR
+Перезапустить службу FRR
 
 
     systemctl restart frr 
 
 <h3><u>Включить маршрутизацию OSPF на HQ-SRV, BR-SRV</u></h3>
 
-* Открыть /etc/frr/daemons и включить демон маршрутизации OSPFD
+Открыть /etc/frr/daemons и включить демон маршрутизации OSPFD
 
 
     ospfd=yes
 
-* Перезапустить службу frr
+Перезапустить службу frr
 
 
     systemctl restart frr
 
 <h3><u>Настроить BGP-маршрутизацию на ISP</u></h3>
-* Открыть оболочку для FRR
+
+Открыть оболочку для FRR
 
 
     vtysh
 
-* Открыть режим конфигурирование
+Открыть режим конфигурирование
 
 
     configure terminal
