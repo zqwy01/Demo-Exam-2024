@@ -1045,6 +1045,49 @@ ___
 
     smbclient -L hq-srv.hq.work
 
+<h2>4. Настройка Apache сервера</h2>
+
+*Текст задание*
+
+
+    Сконфигурируйте веб-сервер LMS Apache на сервере BRSRV:
+        a. На главной странице должен отражаться номер места
+        b. Используйте базу данных mySQL
+        c. Создайте пользователей в соответствии с таблицей,
+        пароли у всех пользователей «P@ssw0rd»
+
+
+| Пользователь | Группа  |
+|--------------|---------|
+| admin        | Admin   |
+| Manager1     | Manager |
+| Manager2     | Manager |
+| Manager3     | Manager |
+| User1        | WS      |
+| User2        | WS      |
+| User3        | WS      |
+| User4        | WS      |
+| User5        | TEAM    |
+| User6        | TEAM    |
+| User7        | TEAM    |
+
+Установить Apache2
+
+
+    apt-get install apache2 -y
+
+Редактировать /var/www/html/index.html
+Удалить всё и оставить место
+
+Перезапустить Apache2
+
+
+    systemctl restart apache2
+
+Зайти на сайт на клиенте
+
+![img_19.png](img_19.png)
+
 
 ___
 
