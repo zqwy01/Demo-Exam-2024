@@ -92,32 +92,32 @@ ___
 
 Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
-      auto enp0s8
-      iface enp0s8 inet static
-          address 3.3.3.1
-          netmask 255.255.255.0
+    auto enp0s8
+    iface enp0s8 inet static
+        address 3.3.3.1
+        netmask 255.255.255.0
+    
+    iface enp0s8 inet6 static
+        address cafe::1
+        netmask 64
+    
+    auto enp0s9
+    iface enp0s9 inet static
+        address 4.4.4.1
+        netmask 255.255.255.192
+    
+    iface enp0s9 inet6 static
+        address dead::de01
+        netmask 122
+    
+    auto enp0s10
+    iface enp0s10 inet static
+        address 5.5.5.1
+        netmask 255.255.255.240
       
-      iface enp0s8 inet6 static
-          address cafe::1
-          netmask 64
-
-      auto enp0s9
-      iface enp0s9 inet static
-          address 4.4.4.1
-          netmask 255.255.255.192
-      
-      iface enp0s9 inet6 static
-          address dead::de01
-          netmask 122
-
-      auto enp0s10
-      iface enp0s10 inet static
-          address 5.5.5.1
-          netmask 255.255.255.240
-      
-      iface enp0s10 inet6 static
-          address face::fac1
-          netmask 124
+    iface enp0s10 inet6 static
+        address face::fac1
+        netmask 124
 
 Перезапустить демон networking
 
@@ -136,23 +136,23 @@ ___
 Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
 
-      auto enp0s8
-      iface enp0s8 inet static
-          address 4.4.4.2
-          netmask 255.255.255.192
-      
-      iface enp0s8 inet6 static
-          address dead::de02
-          netmask 122
-
-      auto enp0s9
-      iface enp0s9 inet static
-          address 192.168.100.1
-          netmask 255.255.255.192
-      
-      iface enp0s9 inet6 static
-          address deda::de01
-          netmask 122
+    auto enp0s8
+    iface enp0s8 inet static
+        address 4.4.4.2
+        netmask 255.255.255.192
+    
+    iface enp0s8 inet6 static
+        address dead::de02
+        netmask 122
+    
+    auto enp0s9
+    iface enp0s9 inet static
+        address 192.168.100.1
+        netmask 255.255.255.192
+    
+    iface enp0s9 inet6 static
+        address deda::de01
+        netmask 122
 
 Перезапустить демон networking
 
@@ -171,14 +171,14 @@ ___
 Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
 
-      auto enp0s8
-      iface enp0s8 inet static
-          address 192.168.100.2
-          netmask 255.255.255.192
-      
-      iface enp0s8 inet6 static
-          address deda::de02
-          netmask 122
+    auto enp0s8
+    iface enp0s8 inet static
+        address 192.168.100.2
+        netmask 255.255.255.192
+    
+    iface enp0s8 inet6 static
+        address deda::de02
+        netmask 122
 
 Перезапустить демон networking
 
@@ -197,23 +197,23 @@ ___
 Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
 
-      auto enp0s8
-      iface enp0s8 inet static
-          address 5.5.5.2
-          netmask 255.255.255.240
-      
-      iface enp0s8 inet6 static
-          address face::fac2
-          netmask 124
-
-      auto enp0s9
-      iface enp0s9 inet static
-          address 172.16.100.1
-          netmask 255.255.255.240
-      
-      iface enp0s9 inet6 static
-          address fefa::fef1
-          netmask 124
+    auto enp0s8
+    iface enp0s8 inet static
+        address 5.5.5.2
+        netmask 255.255.255.240
+    
+    iface enp0s8 inet6 static
+        address face::fac2
+        netmask 124
+    
+    auto enp0s9
+    iface enp0s9 inet static
+        address 172.16.100.1
+        netmask 255.255.255.240
+    
+    iface enp0s9 inet6 static
+        address fefa::fef1
+        netmask 124
 
 Перезапустить демон networking
 
@@ -232,14 +232,14 @@ ___
 Добавить виртуальные сетевых интерфейсы и IPV4, IPV6 адреса
 
 
-      auto enp0s8
-      iface enp0s8 inet static
-          address 172.16.100.2
-          netmask 255.255.255.240
-      
-      iface enp0s8 inet6 static
-          address fefa::fef2
-          netmask 124
+    auto enp0s8
+    iface enp0s8 inet static
+        address 172.16.100.2
+        netmask 255.255.255.240
+    
+    iface enp0s8 inet6 static
+        address fefa::fef2
+        netmask 124
 
 Перезапустить демон networking
 
@@ -380,15 +380,15 @@ ___
 
 
     router ospf 
-      ospf router-id 192.168.100.1
-      redistribute connected
-      redistribute bgp
-      neighbor 192.168.100.2
-      network 3.3.3.0/24 area 0
-      network 4.4.4.0/26 area 0
-      network 5.5.5.0/28 area 0
-      network 192.168.100.0/26 area 0
-      network 172.16.100.0/28 area 0
+        ospf router-id 192.168.100.1
+        redistribute connected
+        redistribute bgp
+        neighbor 192.168.100.2
+        network 3.3.3.0/24 area 0
+        network 4.4.4.0/26 area 0
+        network 5.5.5.0/28 area 0
+        network 192.168.100.0/26 area 0
+        network 172.16.100.0/28 area 0
 
 Настроить маршрутизатор ospf6, настроить интерфейсы и включить перераспределение маршрутов
 
@@ -400,9 +400,9 @@ ___
     ipv6 ospf6 area 0
 
     router ospf6
-      ospf6 router-id 1.0.0.0    
-      redistribute connected
-      redistribute bgp
+        ospf6 router-id 1.0.0.0    
+        redistribute connected
+        redistribute bgp
 
 <h3><u>Настроить OSPF маршрутизацию на HQ-SRV</u></h3>
 
@@ -410,9 +410,9 @@ ___
 
 
     router ospf
-      ospf router-id 192.168.100.2
-      network 192.168.100.0/26 area 0
-      neighbor 192.168.100.1
+        ospf router-id 192.168.100.2
+        network 192.168.100.0/26 area 0
+        neighbor 192.168.100.1
 
 Настроить маршрутизатор ospf6, настроить интерфейсы и включить перераспределение маршрутов
 
@@ -421,7 +421,7 @@ ___
     ipv6 ospf6 area 0
 
     router ospf6
-      ospf6 router-id 1.0.0.1
+        ospf6 router-id 1.0.0.1
 
 
 <h3><u>Настроить BGP и OSPF маршрутизацию на BR-R</u></h3>
@@ -430,11 +430,11 @@ ___
 
 
     router bgp 1
-      bgp router-id 5.5.5.5
-      neighbor 4.4.4.2 remote-as 1
-      neighbor 5.5.5.1 remote-as 1
-      neighbor dead::de02 remote-as 1
-      neighbor face::fac1 remote-as 1
+        bgp router-id 5.5.5.5
+        neighbor 4.4.4.2 remote-as 1
+        neighbor 5.5.5.1 remote-as 1
+        neighbor dead::de02 remote-as 1
+        neighbor face::fac1 remote-as 1
 
     address-family ipv4 unicast
     redistribute connected
@@ -449,15 +449,15 @@ ___
 
 
     router ospf
-      ospf router-id 172.16.100.1
-      redistribute connected
-      redistribute bgp
-      neighbor 172.16.100.2
-      network 3.3.3.0/24 area 0
-      network 4.4.4.0/26 area 0
-      network 5.5.5.0/28 area 0
-      network 192.168.100.0/26 area 0
-      network 172.16.100.0/28 area 0
+        ospf router-id 172.16.100.1
+        redistribute connected
+        redistribute bgp
+        neighbor 172.16.100.2
+        network 3.3.3.0/24 area 0
+        network 4.4.4.0/26 area 0
+        network 5.5.5.0/28 area 0
+        network 192.168.100.0/26 area 0
+        network 172.16.100.0/28 area 0
 
 * Настроить маршрутизатор ospf6, настроить интерфейсы и включить перераспределение маршрутов
 
@@ -469,9 +469,9 @@ ___
     ipv6 ospf6 area 0
 
     router ospf6
-      ospf6 router-id 1.0.0.2 
-      redistribute connected
-      redistribute bgp
+        ospf6 router-id 1.0.0.2 
+        redistribute connected
+        redistribute bgp
 
 <h3><u>Настроить OSPF маршрутизацию на BR-SRV</u></h3>
 
@@ -479,9 +479,9 @@ ___
 
     
     router ospf
-      ospf router-id 172.16.100.2
-      network 172.16.100.0/28 area 0
-      neighbor 172.16.100.1
+        ospf router-id 172.16.100.2
+        network 172.16.100.0/28 area 0
+        neighbor 172.16.100.1
 
 Настроить маршрутизатор ospf6, настроить интерфейсы и включить перераспределение маршрутов
 
@@ -490,7 +490,7 @@ ___
     ipv6 ospf6 area 0
 
     router ospf6
-      ospf6 router-id 1.0.0.3
+        ospf6 router-id 1.0.0.3
 
 Проверить соседние маршрутизаторы
 
@@ -532,8 +532,8 @@ ___
     }
     
     host HQ-SRV {
-      hardware ethernet (надо узнать из команды ip на HQ-SRV)
-      fixed-address 192.168.100.2;
+        hardware ethernet (надо узнать из команды ip на HQ-SRV)
+        fixed-address 192.168.100.2;
     }
 
 Редактировать конфигурационный файл /etc/network/interfaces на HQ-SRV
@@ -868,11 +868,11 @@ ___
     apt-get install install krb5-user samba winbind -y
 
     Область по умолчанию для Kerberos:
-      HQ.WORK
+        HQ.WORK
     Сервер Kerberos для вашей области:
-      HQ-SRV.HQ.WORK
+        HQ-SRV.HQ.WORK
     Управляющий сервер Kerberos:
-      HQ-SRV.HQ.WORK
+        HQ-SRV.HQ.WORK
 
 Редактировать конфигурацию /etc/dhcp/dhclient.conf
 
