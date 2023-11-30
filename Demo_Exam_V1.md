@@ -753,18 +753,24 @@ ___
 Выполнить команду, для проверки синхронизации с сервером
 
 
-        timedatectl
+    timedatectl
 
 Выполнить команду, для детальной проверки синхронизации с Chrony сервером
 
 
-        chronyc tracking
+    chronyc tracking
 
 Настроить NTP-клиент на Windows 10
 
 ___
 
-<h2>2. Настройка сервер и клиент Samba + Kerberos + DNS</h2>
+<h2>2. Настройка сервер и клиент Samba + Kerberos</h2>
+
+*Текст задание*
+
+    Настройте сервер домена выбор, его типа обоснуйте, на базе HQ-SRV через web интерфейс, выбор технологий обоснуйте.
+        a. Введите машины BR-SRV и CLI в данный домен
+        b. Организуйте отслеживание подключения к домену
 
 Редактировать конфигурацию /etc/hosts
 
@@ -774,12 +780,12 @@ ___
 Изменить hostname**
 
 
-        hostnamectl hostname HQ-SRV.HQ.WORK
+    hostnamectl hostname HQ-SRV.HQ.WORK
 
 Редактировать конфигурацию /etc/dhcp/dhclient.conf
 
   
-        prepend domain-name-servers 192.168.100.2;
+    prepend domain-name-servers 192.168.100.2;
 
 Установить пакеты
 
@@ -797,7 +803,7 @@ ___
 Выключить службы
 
 
-        systemctl disable --now samba-ad-dc smbd nmbd winbind
+    systemctl disable --now samba-ad-dc smbd nmbd winbind
 
 
 Удалить стандартную конфигурацию
@@ -821,32 +827,31 @@ ___
 Копируем конфигурацию Kerberos
 
 
-        cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
+    cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
 
 Создать символическую ссылку на keytab
 
 
-        ln -s /var/lib/samba/private/secrets.keytab /etc/krb5.keytab
+    ln -s /var/lib/samba/private/secrets.keytab /etc/krb5.keytab
 
 Запустить Samba AD
 
 
-        systemctl unmask samba-ad-dc.service
-        systemctl enable --now samba-ad-dc.service
+    systemctl unmask samba-ad-dc.service
+    systemctl enable --now samba-ad-dc.service
 
 Получить тикет от Kerberos
 
 
-        kinit Administrator
+    kinit Administrator
 
 Создадим пользователя samba
 
 
-        samba-tool user add Admin
+    samba-tool user add Admin
 
-Добавить DNS-сервер IPV4 IPV6 на CLI
 
-![img_4.png](img_4.png)
+Добавить DNS-сервер для CLI 
 
 ![img_5.png](img_5.png)
 
@@ -860,61 +865,107 @@ ___
 Установить Samba+Kerberos на клиенте BR-SRV
 
 
-        apt-get install install krb5-user samba winbind -y
-    
-        Область по умолчанию для Kerberos:
-          HQ.WORK
-        Сервер Kerberos для вашей области:
-          HQ-SRV.HQ.WORK
-        Управляющий сервер Kerberos:
-          HQ-SRV.HQ.WORK
+    apt-get install install krb5-user samba winbind -y
+
+    Область по умолчанию для Kerberos:
+      HQ.WORK
+    Сервер Kerberos для вашей области:
+      HQ-SRV.HQ.WORK
+    Управляющий сервер Kerberos:
+      HQ-SRV.HQ.WORK
 
 Редактировать конфигурацию /etc/dhcp/dhclient.conf
 
 
-        prepend domain-name "HQ.WORK";
-        prepend domain-name-servers 192.168.100.2;
+    prepend domain-name "HQ.WORK";
+    prepend domain-name-servers 192.168.100.2;
 
 Изменить hostname
 
 
-        hostnamectl hostname BR-SRV.HQ.WORK
+    hostnamectl hostname BR-SRV.HQ.WORK
 
 Редактировать /etc/samba/smb.conf
 
 
-        dns forwarder = 192.168.100.2
-        realm = HQ.WORK
-        workgroup = HQ
-        security = ADS
+    dns forwarder = 192.168.100.2
+    realm = HQ.WORK
+    workgroup = HQ
+    security = ADS
 
 Перезапустить BR-SRV
 
 
-        reboot
+    reboot
 
 Получить тикет от Kerberos
 
 
-        kinit Administrator
+    kinit Administrator
 
 Войти в домен HQ.WORK на BR-SRV
 
-        net ads join -U Administrator
+    net ads join -U Administrator
 
-Добавить записи и зону для DNS сервера
+Настроим монитор подключенных устройств к домену
 
 
-        samba-tool dns add hq-srv hq.work hq-r A 192.168.100.1
-        samba-tool dns add hq-srv hq.work hq-r PTR 192.168.100.1
-        samba-tool dns add hq-srv hq.work isp A 4.4.4.1
-        samba-tool dns add hq-srv hq.work isp PTR 4.4.4.1
+    watch smbstatus
+
+<h2>3. Настройка DNS сервера</h2>
+
+*Текст задание*
+
+
+    Настройте DNS-сервер на сервере HQ-SRV:
+    a. На DNS сервере необходимо настроить 2 зоны
+    Зона hq.work, также не забудьте настроить обратную зону
+
+
+| Имя устройства     | Тип записи | Адрес         |
+|--------------------|---------|---------------|
+| hq-r.hq.work       | A PTR   | 192.168.100.1 |
+| hq-srv.hq.work     | A PTR   | 4.4.4.1       |
+| br-r.branch.work   | A PTR   | 5.5.5.2       |
+| br-srv.branch.work | A       | 172.16.100.2  |
+
+
+Добавить DNS записи типа A и PTR для зоны HQ 
+
+
+    samba-tool dns add hq-srv hq.work hq-r A 192.168.100.1
+    samba-tool dns add hq-srv hq.work hq-r PTR 192.168.100.1
+    samba-tool dns add hq-srv hq.work isp A 4.4.4.1
+    samba-tool dns add hq-srv hq.work isp PTR 4.4.4.1
     
-        samba-tool dns zonecreate hq-srv branch.work
-    
-        samba-tool dns add hq-srv branch.work br-r A 5.5.5.2
-        samba-tool dns add hq-srv branch.work br-r PTR 5.5.5.2
-        samba-tool dns add hq-srv branch.work br-srv A 172.16.100.2
+Добавить новую зону и DNS записи типа A и PTR для зоны branch
+
+    samba-tool dns zonecreate hq-srv branch.work
+
+    samba-tool dns add hq-srv branch.work br-r A 5.5.5.2
+    samba-tool dns add hq-srv branch.work br-r PTR 5.5.5.2
+    samba-tool dns add hq-srv branch.work br-srv A 172.16.100.2
+
+<h2>3. Настройка SMB сервера</h2>
+
+*Текст задание*
+
+
+    Реализуйте файловый SMB или NFS (выбор обоснуйте) сервер на базе сервера HQ-SRV.
+        a. Должны быть опубликованы общие папки по
+        названиям:
+            i. Branch_Files - только для пользователя
+            Branch admin;
+            ii. Network - только для пользователя
+            Network admin;
+            iii. Admin_Files - только для пользователя
+            Admin;
+        b. Каждая папка должна монтироваться на всех серверах в папку 
+        /mnt/<name_folder> (например, /mnt/All_files) автоматически при входе доменного
+        пользователя в систему и отключаться при его выходе из сессии. 
+        Монтироваться должны только доступные пользователю каталоги.
+
+
 
 ___
 
@@ -924,10 +975,10 @@ ___
 
 
 
-        PermitEmptyPasswords no
-        PasswordAuthentication Yes
-        MaxAuthTries 4
-        ClientAliveInterval 5
+    PermitEmptyPasswords no
+    PasswordAuthentication Yes
+    MaxAuthTries 4
+    ClientAliveInterval 5
 
 
 
