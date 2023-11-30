@@ -1036,6 +1036,15 @@ ___
 ![img_17.png](img_17.png)
 
 
+Установить smbclient на BR-SRV
+
+    apt-get install smbclient -y
+
+Посмотреть общие папки
+
+
+    smbclient -L hq-srv.hq.work
+
 
 ___
 
