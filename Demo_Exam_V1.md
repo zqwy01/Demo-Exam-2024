@@ -1077,7 +1077,7 @@ ___
     apt-get install apache2 -y
 
 Редактировать /var/www/html/index.html
-Удалить всё и оставить место
+Удалить всё и ввести число рабочего места
 
 Перезапустить Apache2
 
@@ -1088,6 +1088,68 @@ ___
 
 ![img_19.png](img_19.png)
 
+Установить mysql
+
+
+    apt-get install mariadb-server mariadb-client -y
+
+Открыть mysql 
+
+
+    mysql
+
+Создать группы(роли)
+
+
+    CREATE ROLE Admin;
+    CREATE ROLE Manager;
+    CREATE ROLE WS;
+    CREATE ROLE TEAM;
+
+Создать пользователей
+
+
+    CREATE USER Admin;
+    CREATE USER Manager1;
+    CREATE USER Manager2;
+    CREATE USER Manager3;
+    CREATE USER User1;
+    CREATE USER User2;
+    CREATE USER User3;
+    CREATE USER User4;
+    CREATE USER User5;
+    CREATE USER User6;
+    CREATE USER User7;
+
+Присвоить группу(роль) к пользователю
+
+
+    GRANT Admin to 'Admin';
+    
+    GRANT Manager to 'Manager1';
+    GRANT Manager to 'Manager2';
+    GRANT Manager to 'Manager3';
+
+    GRANT WS to 'User1';
+    GRANT WS to 'User2';
+    GRANT WS to 'User3';
+    GRANT WS to 'User4';
+
+    GRANT TEAM to 'User5';
+    GRANT TEAM to 'User6';
+    GRANT TEAM to 'User7';
+
+    SET PASSSWORD FOR 'Admin' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'Manager1' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'Manager2' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'Manager3' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'User1' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'User2' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'User3' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'User4' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'User5' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'User6' = PASSWORD('P@ssw0rd');
+    SET PASSSWORD FOR 'User7' = PASSWORD('P@ssw0rd');
 
 ___
 
